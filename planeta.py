@@ -45,8 +45,7 @@ class Planeta(object):
         y1=vy + dt*self.y_actual[1]
         vx1=fx + dt*self.y_actual[2]
         vy1=fy + dt*self.y_actual[3]
-        c_actual= [x1,y1,vx1,vy1]
-        self.y_actual=c_actual
+        self.y_actual=[x1,y1,vx1,vy1]
         self.t_actual+=dt
         pass
 
@@ -54,7 +53,27 @@ class Planeta(object):
         '''
         Similar a avanza_euler, pero usando Runge-Kutta 4.
         '''
-        
+        yn = self.y_actual
+
+        k1=self.ecuacion_de_movimiento()
+        self.y_actual= yactual + dt*k1/2.
+
+        k2=self.ecuacion_de_movimiento()
+        self.y_actual= yactual + dt*k2/2
+
+        k3=self.ecuacion_de_movimiento()
+        self.y_actual= yactual + dt*k3/2
+
+        k4=self.ecuacion_de_movimiento()
+
+        '''x1 = x + (k1[0]/6. + k2[0]/3. + k3[0]/3. + k4[0]/6.)*dt
+        y1 = y + (k1[1]/6. + k2[1]/3. + k3[1]/3. + k4[1]/6.)*dt
+        vx1 = vx + (k1[2]/6. + k2[2]/3. + k3[2]/3. + k4[2]/6.)*dt
+        vy1 = vy + (k1[3]/6. + k2[3]/3. + k3[3]/3. + k4[3]/6.)*dt'''
+
+
+        self.y_actual = yn + (k1/6. + k2/3. + k3/3. + k4/6.)*dt
+        self.t_actual + = dt
         pass
 
     def avanza_verlet(self, dt):
