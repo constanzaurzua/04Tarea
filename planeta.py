@@ -80,10 +80,27 @@ class Planeta(object):
         '''
         Similar a avanza_euler, pero usando Verlet.
         '''
+        x0, y0, vx0, vy0 = self.y_actual()
+        ec_mov_n=self.ecuacion_de_movimiento()
+
+        x1=x0+ dt*vx0 +ec_mov_n[2]*(dt**2)/2.
+        y1=y0+ dt*vy0 +ec_mov_n[3]*(dt**2)/2.
+
+        self.y_actual=[x1,y1,vx0,vy0]
+        vx1,vy1,fx1,fy1= self.ecuacion_de_movimiento()
+        vx1= vx0 + fx1*dt/2. + ec_mov_n[2]*(dt**2)/2.
+        vy1= vy0 + fy1*dt/2. + ec_mov_n[3]*(dt**2)/2.
+
+        self.y_actual=x1,y1,vx1,vy1]
+        self.t_actual+=dt
         pass
 
     def energia_total(self):
         '''
         Calcula la enérgía total del sistema en las condiciones actuales.
         '''
+        y = self.y_actual()
+        ec= self.ecuacion_de_movimiento()
+        r= (x**2 + y**2)**0.5
+        self.energia_actual=0.5*m*(ec[0]**2 + ec[1]**2) + G*m*M(self.alpha/r**2 - 1/r)
         pass
