@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from planeta import Planeta
 
+'''Solucion con verlet'''
+
 condicion_inicial = [10, 0, 0, 0.3] #x, y, vx, vy
 
 p = Planeta(condicion_inicial) #se establece condicio inicial como actuales

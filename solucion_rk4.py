@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from planeta import Planeta
 
+'''Calculo con RK4'''
+
 condicion_inicial=[10, 0 , 0 ,0.4]
 p = Planeta(condicion_inicial)
 pasos = 16500

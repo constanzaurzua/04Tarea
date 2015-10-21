@@ -3,7 +3,9 @@
 import numpy as np
 class Planeta(object):
     '''
-    Complete el docstring.
+    La clase planeta tiene como función construir una serie de funciones XD para poder determinar la posición de algun
+    planeta según los métodos de integración como Runge-Kutta, Euler y Verlet
+    y finalmente se obtiene la energía total del sistema osea la potencial y cinetica
     '''
 
     def __init__(self, condicion_inicial, alpha=0):
@@ -20,7 +22,6 @@ class Planeta(object):
         self.y_actual = condicion_inicial
         self.t_actual = 0.
         self.alpha = alpha
-        x0, y0, vx0, vy0= self.y_actual
 
 
     def ecuacion_de_movimiento(self):

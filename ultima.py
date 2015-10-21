@@ -2,6 +2,8 @@ from planeta import Planeta
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+'''Solucion usando verlet pero para 30 orbitas'''
 condicion_inicial = [10, 0, 0, 0.4]
 p = Planeta(condicion_inicial, 10**(-2.487))
 
@@ -28,7 +30,7 @@ plt.figure(1)                # the first figure
 plt.subplot(211)             # the first subplot in the first figure
 plt.xlabel('$X$', fontsize=15)
 plt.ylabel('$Y$',fontsize=15)
-plt.title('$\ Metodo \ Verlet \ con \ alpha = 10**(-2.487)$')
+plt.title('$\ Metodo \ Verlet \ con \ alpha = 10^(-2.487)$')
 plt.plot(x,y)
 plt.subplot(212)             # the second subplot in the first figure
 plt.xlabel('$\ tiempo\ [s]$', fontsize=15)
