@@ -28,29 +28,16 @@ for i in range(1,pasos):
     p.energia_total()
 
 print e
-plt.figure(1)
+plt.figure(1)                # the first figure
+plt.subplot(211)             # the first subplot in the first figure
+plt.xlabel('$X$', fontsize=15)
+plt.ylabel('$Y$',fontsize=15)
+plt.title('$\ Metodo \ Euler \ con \ alpha = 0$')
 plt.plot(x,y)
-plt.show()
-
-plt.figure(2)
+plt.subplot(212)             # the second subplot in the first figure
+plt.xlabel('$\ tiempo\ [s]$', fontsize=15)
+plt.ylabel('$Energia$',fontsize=15)
+plt.title('$\ Energia \ en \ funcion \ del \ tiempo$')
 plt.plot(t,e)
+plt.savefig('fig2.png')
 plt.show()
-
-'''ax1 = fig.add_subplot(211)
-plt.suptitle('Trayectoria y energia vs tiempo con $v_{y}(t=0)=0.4$ y  ' r'$\alpha=0$ (Euler explicito)')
-fig.subplots_adjust(hspace=.3)
-ax1.plot(x,y)
-ax1.grid(True)
-ax1.set_xlabel('x')
-ax1.set_ylabel('y')
-ax2 = fig.add_subplot(212)
-ax2.plot(t,e)
-ax2.grid(True)
-ax2.set_xlabel('tiempo')
-ax2.set_ylabel('energia')
-ax2.set_ylim(-0.03,-0.01)
-
-
-
-plt.draw()
-plt.show()'''
