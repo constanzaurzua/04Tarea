@@ -16,9 +16,11 @@ class Planeta(object):
         >> print(mercurio.alpha)
         >> 0.
         '''
+
         self.y_actual = condicion_inicial
         self.t_actual = 0.
         self.alpha = alpha
+        x0, y0, vx0, vy0= self.y_actual
 
 
     def ecuacion_de_movimiento(self):
@@ -28,11 +30,8 @@ class Planeta(object):
         '''
         x, y, vx, vy = self.y_actual
         r= (x**2 + y**2)**0.5
-        G=1
-        M=1
-        m=1
-        fx = -G*m*M*(1/r**2 - 2*self.alpha/r**3)*(x / r)
-        fy = -G*m*M*(1/r**2 - 2*self.alpha/r**3)*(y/ r)
+        fx = -(1/r**2 - 2*self.alpha/r**3)*(x / r)
+        fy = -(1/r**2 - 2*self.alpha/r**3)*(y/ r)
         return np.array([vx, vy, fx, fy])
 
     def avanza_euler(self, dt):
@@ -41,13 +40,18 @@ class Planeta(object):
         en un intervalo de tiempo dt usando el método de Euler explícito. El
         método no retorna nada, pero re-setea los valores de self.y_actual.
         '''
-        vx,vy,fx,fy=self.ecuacion_de_movimiento()
-        x1=vx + dt*self.y_actual[0]
-        y1=vy + dt*self.y_actual[1]
-        vx1=fx + dt*self.y_actual[2]
-        vy1=fy + dt*self.y_actual[3]
-        self.y_actual=[x1,y1,vx1,vy1]
-        self.t_actual+=dt
+
+        x= self.y_actual[0]
+        y= self.y_actual[1]
+        vx= self.y_actual[2]
+        vy= self.y_actual[3]
+        vx, vy, fx, fy = self.ecuacion_de_movimiento()
+        x1= vx*dt + x
+        y1= vy*dt + y
+        vx1= fx*dt + vx
+        vy1= fy*dt + vy
+        self.y_actual =[x1,y1,vx1,vy1]
+        self.t_actual += dt
         pass
 
     def avanza_rk4(self, dt):
@@ -57,14 +61,14 @@ class Planeta(object):
         yn = self.y_actual
 
         k1= self.ecuacion_de_movimiento()
-        self.y_actual= yn + dt*k1/2.
+        self.y_actual= yn+dt*(k1/2.)
 
         k2= self.ecuacion_de_movimiento()
-        self.y_actual= yn + dt*k2/2.
+        self.y_actual= yn+dt*(k2/2.)
 
 
         k3= self.ecuacion_de_movimiento()
-        self.y_actual= yn + dt*k3
+        self.y_actual= yn+dt*k3
 
         k4= self.ecuacion_de_movimiento()
         #self.y_anterior = yn
@@ -73,34 +77,36 @@ class Planeta(object):
         self.t_actual += dt
         pass
 
-    '''def avanza_verlet(self, dt):
+    def avanza_verlet(self, dt):
 
-        #Similar a avanza_euler, pero usando Verlet.
+        '''Similar a avanza_euler, pero usando Verlet.'''
 
-        x0, y0, vx0, vy0 = self.y_actual()
-        ec_mov_n=self.ecuacion_de_movimiento()
+        x0, y0, vx0, vy0 = self.y_actual
+        fx = self.ecuacion_de_movimiento()[2]
+        fy = self.ecuacion_de_movimiento()[3]
 
-        x1=x0+ dt*vx0 +ec_mov_n[2]*(dt**2)/2.
-        y1=y0+ dt*vy0 +ec_mov_n[3]*(dt**2)/2.
+        xn_1 = x0 + dt*vx0 + fx*(dt**2)*0.5
+        yn_1 = y0 + dt*vy0 + fy*(dt**2)*0.5
 
-        self.y_actual=[x1,y1,vx0,vy0]
-        vx1,vy1,fx1,fy1= self.ecuacion_de_movimiento()
-        vx1= vx0 + fx1*dt/2. + ec_mov_n[2]*(dt**2)/2.
-        vy1= vy0 + fy1*dt/2. + ec_mov_n[3]*(dt**2)/2.
+        self.y_actual=[xn_1,yn_1,vx0,vy0]
+        fx1=self.ecuacion_de_movimiento()[2]
+        fy1=self.ecuacion_de_movimiento()[3]
 
-        self.y_actual=[x1,y1,vx1,vy1]
+
+        vxn_1 = vx0 + (fx1 + fx)*dt*0.5
+        vyn_1 = vy0 + (fy1 + fy)*dt*0.5
+
+        self.y_actual = [xn_1, yn_1,  vxn_1, vyn_1]
         self.t_actual+=dt
-        pass'''
+        pass
 
     def energia_total(self):
 
-        #Calcula la energia total de el sistema en las condiciones actuales.
-        G=1
-        m=1
-        M=1
+        '''Calcula la energia total de el sistema en las condiciones actuales.'''
+
         x,y,vx,vy = self.y_actual
         #ec= self.ecuacion_de_movimiento()
         r = (x**2 + y**2)**0.5
-        energia=0.5*m*(x**2 + y**2) + G*m*M*(self.alpha/r**2 - 1/r)
+        energia=0.5*(x**2 + y**2) + (self.alpha/r**2 - 1/r)
         return energia
         pass
