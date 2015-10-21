@@ -5,9 +5,9 @@ from planeta import Planeta
 condicion_inicial = [10, 0, 0, 0.3] #x, y, vx, vy
 
 p = Planeta(condicion_inicial) #se establece condicio inicial como actuales
-pasos=8000
-dt=4000./pasos
-t=np.linspace(0,4000,pasos)#aproximadamente 5 orbitas
+pasos=16500
+dt=8000./pasos
+t=np.linspace(0,8000,pasos)#aproximadamente 5 orbitas
 # se crean listas vacias de x, y, Energia
 x=np.zeros(pasos)
 y=np.zeros(pasos)

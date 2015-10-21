@@ -6,9 +6,9 @@ from planeta import Planeta
 
 condicion_inicial=[10, 0 , 0 ,0.4]
 p = Planeta(condicion_inicial)
-pasos = 10000#4*np.int(1e3)
-dt = 0.1#2000./pasos
-t = np.linspace(0,2000,pasos)
+pasos = 16500
+dt = 8000./pasos
+t = np.linspace(0,8000,pasos)
 
 x=np.zeros(pasos)
 y=np.zeros(pasos)
