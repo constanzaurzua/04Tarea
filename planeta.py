@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import numpy as np
 class Planeta(object):
     '''
     Complete el docstring.
@@ -20,6 +20,7 @@ class Planeta(object):
         self.t_actual = 0.
         self.alpha = alpha
 
+
     def ecuacion_de_movimiento(self):
         '''
         Implementa la ecuación de movimiento, como sistema de ecuaciónes de
@@ -32,7 +33,7 @@ class Planeta(object):
         m=1
         fx = -G*m*M*(1/r**2 - 2*self.alpha/r**3)*(x / r)
         fy = -G*m*M*(1/r**2 - 2*self.alpha/r**3)*(y/ r)
-        return [vx, vy, fx, fy]
+        return np.array([vx, vy, fx, fy])
 
     def avanza_euler(self, dt):
         '''
@@ -55,31 +56,27 @@ class Planeta(object):
         '''
         yn = self.y_actual
 
-        k1=self.ecuacion_de_movimiento()
-        self.y_actual= yactual + dt*k1/2.
+        k1= self.ecuacion_de_movimiento()
+        self.y_actual= yn + dt*k1/2.
 
-        k2=self.ecuacion_de_movimiento()
-        self.y_actual= yactual + dt*k2/2
+        k2= self.ecuacion_de_movimiento()
+        self.y_actual= yn + dt*k2/2.
 
-        k3=self.ecuacion_de_movimiento()
-        self.y_actual= yactual + dt*k3/2
 
-        k4=self.ecuacion_de_movimiento()
+        k3= self.ecuacion_de_movimiento()
+        self.y_actual= yn + dt*k3
 
-        '''x1 = x + (k1[0]/6. + k2[0]/3. + k3[0]/3. + k4[0]/6.)*dt
-        y1 = y + (k1[1]/6. + k2[1]/3. + k3[1]/3. + k4[1]/6.)*dt
-        vx1 = vx + (k1[2]/6. + k2[2]/3. + k3[2]/3. + k4[2]/6.)*dt
-        vy1 = vy + (k1[3]/6. + k2[3]/3. + k3[3]/3. + k4[3]/6.)*dt'''
-
+        k4= self.ecuacion_de_movimiento()
+        #self.y_anterior = yn
 
         self.y_actual = yn + (k1/6. + k2/3. + k3/3. + k4/6.)*dt
-        self.t_actual + = dt
+        self.t_actual += dt
         pass
 
-    def avanza_verlet(self, dt):
-        '''
-        Similar a avanza_euler, pero usando Verlet.
-        '''
+    '''def avanza_verlet(self, dt):
+
+        #Similar a avanza_euler, pero usando Verlet.
+
         x0, y0, vx0, vy0 = self.y_actual()
         ec_mov_n=self.ecuacion_de_movimiento()
 
@@ -91,16 +88,19 @@ class Planeta(object):
         vx1= vx0 + fx1*dt/2. + ec_mov_n[2]*(dt**2)/2.
         vy1= vy0 + fy1*dt/2. + ec_mov_n[3]*(dt**2)/2.
 
-        self.y_actual=x1,y1,vx1,vy1]
+        self.y_actual=[x1,y1,vx1,vy1]
         self.t_actual+=dt
-        pass
+        pass'''
 
     def energia_total(self):
-        '''
-        Calcula la enérgía total del sistema en las condiciones actuales.
-        '''
-        y = self.y_actual()
-        ec= self.ecuacion_de_movimiento()
-        r= (x**2 + y**2)**0.5
-        self.energia_actual=0.5*m*(ec[0]**2 + ec[1]**2) + G*m*M(self.alpha/r**2 - 1/r)
+
+        #Calcula la energia total de el sistema en las condiciones actuales.
+        G=1
+        m=1
+        M=1
+        x,y,vx,vy = self.y_actual
+        #ec= self.ecuacion_de_movimiento()
+        r = (x**2 + y**2)**0.5
+        energia=0.5*m*(x**2 + y**2) + G*m*M*(self.alpha/r**2 - 1/r)
+        return energia
         pass
